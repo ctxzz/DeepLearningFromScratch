@@ -48,7 +48,7 @@ class Affine:
         self.original_x_shape = x.shape
         x = x.reshape(x.shape[0], -1)
         self.x = x
-        out = np.dot(x, self.W) + self.b
+        out = np.dot(self.x, self.W) + self.b
 
         return out
 
@@ -91,7 +91,7 @@ class Dropout:
 
     def forward(self, x, train_flg=True):
         if train_flg:
-            selfmask = np.random.rand(*x.shape) > self.dropout_ratio
+            self.mask = np.random.rand(*x.shape) > self.dropout_ratio
             return x * self.mask
         else:
             return x * (1.0 - self.dropout_ratio)
